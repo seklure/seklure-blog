@@ -6,9 +6,9 @@
 # FixIt 0.2.15 | CHANGED FixIt theme version
 version = "0.4.X" # e.g. "0.2.X", "0.2.15", "v0.2.15" etc.
 # site description
-description = ""
+description = "专注网络安全的技术博客：网络安全、主机安全、应用安全、中间件安全与 AI 安全，含公开漏洞分析与防御实践。"
 # site keywords
-keywords = []
+keywords = ["网络安全", "主机安全", "应用安全", "中间件安全", "AI安全", "漏洞分析", "安全加固", "渗透防御"]
 # site default theme ["light", "dark", "auto"]
 defaultTheme = "auto"
 # which hash function used for SRI, when empty, no SRI is used
@@ -184,10 +184,14 @@ copyright = true
 # whether to show the author
 author = true
 # Site creation year
-since = ""
+since = "2026"
 # FixIt 0.2.12 | NEW Public network security only in China (HTML format is supported)
+# 公安备案号下发后，按如下格式填写（将编号与链接替换为你的备案信息）：
+# gov = "<a href='https://beian.mps.gov.cn/#/query/webSearch' target='_blank' rel='noopener noreferrer'><img src='/images/beian.png' style='vertical-align:middle;'/> 京公网安备 11000000000000号</a>"
 gov = ""
 # ICP info only in China (HTML format is supported)
+# ICP 备案号下发后填写，例如：
+# icp = "<a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>京ICP备2026000000号-1</a>"
 icp = ""
 # license info (HTML format is supported)
 license = ""
