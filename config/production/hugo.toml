@@ -1,2 +1,4 @@
-title = "Hugo FixIt Blog"
-baseURL = "https://hugo-fixit.github.io/hugo-fixit-starter/"
+# Production environment overrides
+title = "seklureBlog"
+# 备案通过后请替换为你的正式域名
+baseURL = "https://www.iflysrc.com/"
