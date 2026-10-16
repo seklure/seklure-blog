@@ -22,6 +22,8 @@ hasCJKLanguage = true
 copyright = "seklure"
 # whether to use robots.txt
 enableRobotsTXT = true
+# disable Hugo's automatic generator meta tag injection
+disableHugoGeneratorInject = true
 # whether to use git commit log
 enableGitInfo = true
 # whether to use emoji code

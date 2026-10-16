@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="seklure">
+  <title>seklure</title>
+  <defs>
+    <linearGradient id="seklureShield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4C8DF6"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+  <!-- 对称盾形：体现安全 / 防御 -->
+  <path d="M32 3.2 L57.6 12.4 V30 C57.6 44 47.2 54.4 32 61.2 C16.8 54.4 6.4 44 6.4 30 V12.4 Z"
+        fill="url(#seklureShield)"/>
+  <path d="M32 7.5 L53.8 15.3 V30.3 C53.8 42.2 44.9 51 32 56.8 C19.1 51 10.2 42.2 10.2 30.3 V15.3 Z"
+        fill="#ffffff" fill-opacity="0.10"/>
+  <!-- 字母 S：与站点图标同一套样条几何，保证标识一致 -->
+  <path d="M42.24 17.32 C39.79 16.46 31.36 11.30 27.52 12.16 C23.68 13.02 18.56 19.17 19.20 22.48 C19.84 25.79 27.09 28.89 31.36 32.00 C35.63 35.11 43.95 37.82 44.80 41.13 C45.65 44.44 40.21 50.65 36.48 51.84 C32.75 53.03 24.75 47.66 22.40 48.26"
+        fill="none" stroke="#ffffff" stroke-width="7.9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

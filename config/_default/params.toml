@@ -43,7 +43,8 @@ enableTranslationMerge = false
 tooltip = true
 # FixIt 0.2.14 | NEW FixIt will, by default, inject a theme meta tag in the HTML head on the home page only.
 # You can turn it off, but we would really appreciate if you don’t, as this is a good way to watch FixIt's popularity on the rise.
-disableThemeInject = false
+disableThemeInject = true
+disable_theme_inject = true
 
 # Author Configuration
 [author]
@@ -66,15 +67,17 @@ issueTpl = "title=[BUG]%20{title}&body=|Field|Value|%0A|-|-|%0A|Title|{title}|%0
 # App icon config
 [app]
 # optional site title override for the app when added to an iOS home screen or Android launcher
-title = "FixIt"
+title = "seklureBlog"
 # whether to omit favicon resource links
 noFavicon = false
 # modern SVG favicon to use in place of older style .png and .ico files
 svgFavicon = ""
 # Safari mask icon color
-iconColor = "#5bbad5"
+iconColor = "#2B6CB0"
+# FixIt reads the snake_case key for the Safari mask icon color
+mask_color = "#2B6CB0"
 # Windows v8-10 tile color
-tileColor = "#da532c"
+tileColor = "#2B6CB0"
 
 # FixIt 0.2.12 | CHANGED Android browser theme color
 [app.themeColor]
@@ -143,7 +146,7 @@ mobileMode = "auto"
 # Header title config
 [header.title]
 # URL of the LOGO
-logo = "/images/fixit.min.svg"
+logo = "/images/seklure-logo.svg"
 # title name
 name = ""
 # you can add extra information before the name (HTML format is supported), such as icons
@@ -194,13 +197,15 @@ gov = ""
 # icp = "<a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>京ICP备2026000000号-1</a>"
 icp = ""
 # license info (HTML format is supported)
-license = ""
+license = "本博客由 <b>seklure</b> 独立开发与维护"
 
 # FixIt 0.3.0 | NEW whether to show Hugo and theme info
 [footer.powered]
-enable = true
-hugoLogo = true
-themeLogo = true
+enable = false
+hugoLogo = false
+themeLogo = false
+hugo_logo = false
+theme_logo = false
 
 # FixIt 0.2.17 | CHANGED Site creation time
 [footer.siteTime]
