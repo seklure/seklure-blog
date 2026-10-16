@@ -1,0 +1,8 @@
+{{- /*
+  主页 profile 区块（头像 / 标题 / 副标题 / 社交链接）已按需求移除。
+
+  说明：主题通过 `{{ if ne $profile.enable false }}` 控制该区块，
+  但 Hugo 在合并配置时会丢弃 `false`、空字符串等零值键，
+  导致站点配置里的 `home.profile.enable = false` 无法生效；
+  因此在站点层用同名 partial 覆盖，使该区块不输出任何内容。
+*/ -}}
