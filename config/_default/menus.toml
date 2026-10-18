@@ -1,7 +1,32 @@
 # -------------------------------------------------------------------------------------
 # Menu Configuration
 # See: https://fixit.lruihao.cn/documentation/basics/#menu-configuration
+#
+# 结构说明：
+#   - 顶层菜单（home / archives / tags / about）显示在左侧竖排菜单栏
+#   - categories 分组不进入左侧菜单栏，其子项以横排标签的形式展开在顶部 header-title 中
 # -------------------------------------------------------------------------------------
+
+# ----------------- 首页 -----------------
+
+[[main]]
+identifier = "home"
+parent = ""
+pre = ""
+post = ""
+name = "首页"
+url = "/"
+title = "返回首页"
+weight = 1
+
+[main.params]
+class = ""
+draft = false
+icon = "fa-solid fa-house"
+type = ""
+divided = false
+
+# ----------------- 归档 -----------------
 
 [[main]]
 identifier = "archives"
@@ -10,15 +35,47 @@ pre = ""
 post = ""
 name = "归档"
 url = "/archives/"
-title = ""
-weight = 1
+title = "按时间浏览全部文章"
+weight = 2
 
 [main.params]
 class = ""
 draft = false
-icon = "fa-solid fa-archive"
+icon = "fa-solid fa-box-archive"
 type = ""
 divided = false
+
+# ----------------- 标签 -----------------
+
+[[main]]
+identifier = "tags"
+parent = ""
+pre = ""
+post = ""
+name = "标签"
+url = "/tags/"
+title = "按标签浏览文章"
+weight = 3
+
+[main.params]
+icon = "fa-solid fa-tags"
+
+# ----------------- 关于 -----------------
+
+[[main]]
+identifier = "about"
+parent = ""
+pre = ""
+post = ""
+name = "关于"
+url = "/about/"
+title = "关于本站与免责声明"
+weight = 4
+
+[main.params]
+icon = "fa-solid fa-circle-info"
+
+# ----------------- 安全板块（分类，用于顶部横排标签） -----------------
 
 [[main]]
 identifier = "categories"
@@ -27,13 +84,11 @@ pre = ""
 post = ""
 name = "分类"
 url = "/categories/"
-title = ""
-weight = 2
+title = "全部文章分类"
+weight = 5
 
 [main.params]
 icon = "fa-solid fa-folder-tree"
-
-# ----------------- 安全板块（分类子菜单） -----------------
 
 [[main]]
 identifier = "cat-network-security"
@@ -86,7 +141,6 @@ weight = 4
 
 [main.params]
 icon = "fa-solid fa-layer-group"
-divided = true
 
 [[main]]
 identifier = "cat-ai-security"
@@ -100,31 +154,3 @@ weight = 5
 
 [main.params]
 icon = "fa-solid fa-robot"
-
-# ---------------------------------------------------------
-
-[[main]]
-identifier = "tags"
-parent = ""
-pre = ""
-post = ""
-name = "标签"
-url = "/tags/"
-title = ""
-weight = 3
-
-[main.params]
-icon = "fa-solid fa-tags"
-
-[[main]]
-identifier = "about"
-parent = ""
-pre = ""
-post = ""
-name = "关于"
-url = "/about/"
-title = "关于本站与免责声明"
-weight = 4
-
-[main.params]
-icon = "fa-solid fa-circle-info"

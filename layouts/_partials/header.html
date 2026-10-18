@@ -1,0 +1,165 @@
+{{- /*
+  站点页头（Element UI 风格）。
+
+  桌面端：
+    [ LOGO + 站点名 ] │ [ 分类横排标签 ]                     [ 作者署名 ]
+  移动端：
+    [ LOGO + 站点名 ]                                [ 作者 ] [ 主题 ] [ 菜单 ]
+    + 抽屉菜单（首页 / 归档 / 标签 / 关于 / 分类）
+
+  分类标签与侧边栏菜单均来自 config/_default/menus.toml，便于维护。
+*/ -}}
+
+{{- $relLangURL := relLangURL "" -}}
+{{- $page := . -}}
+{{- $site := .Site -}}
+{{- $buildDrafts := .Page.Draft -}}
+{{- $titleCfg := $site.Params.header.title -}}
+{{- $authorName := $site.Params.author.name | default $site.Title -}}
+
+{{- /* 分类分组（父级 identifier = categories） */ -}}
+{{- $catMenus := slice -}}
+{{- range $site.Menus.main -}}
+  {{- if and (eq .Identifier "categories") .HasChildren -}}
+    {{- range .Children -}}
+      {{- $catMenus = $catMenus | append . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $currentCats := $page.Params.categories | default slice -}}
+
+{{- /* 作者链接：优先取「关于」菜单地址 */ -}}
+{{- $authorURL := "/about/" | relLangURL -}}
+{{- $authorTitle := "关于作者" -}}
+{{- range $site.Menus.main -}}
+  {{- if eq .Identifier "about" -}}
+    {{- with .URL -}}{{- $authorURL = . | relLangURL -}}{{- end -}}
+    {{- with .Title -}}{{- $authorTitle = . -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ============================= 桌面端 ============================= */ -}}
+<header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper"{{ if $site.Params.githubCorner.enable }} data-github-corner="{{ $site.Params.githubCorner.position }}"{{ end }}>
+    <div class="header-title">
+      <a href="{{ $relLangURL }}" title="{{ $site.Title }}" class="header-title-link">
+        {{- with $titleCfg -}}
+          {{- with .logo -}}
+            {{- dict "Src" . "Class" "logo" "Alt" $site.Title "Width" 32 "Height" 32 | partial "plugin/image.html" -}}
+          {{- end -}}
+          {{- with .pre -}}
+            <span class="header-title-pre">{{ . | safeHTML }}</span>
+          {{- end -}}
+          <span class="header-title-text">{{ .name | default $site.Title }}</span>
+        {{- else -}}
+          <span class="header-title-text">{{ $site.Title }}</span>
+        {{- end -}}
+      </a>
+
+      {{- with $catMenus }}
+        <span class="header-title-split" aria-hidden="true"></span>
+        <nav class="header-cats" aria-label="文章分类">
+          {{- range . -}}
+            {{- $cat := . -}}
+            {{- $url := $cat.URL | relLangURL -}}
+            {{- $count := 0 -}}
+            {{- $key := $cat.Name | lower -}}
+            {{- range $term, $weighted := $site.Taxonomies.categories -}}
+              {{- if eq (lower $term) $key -}}{{- $count = $weighted.Count -}}{{- end -}}
+            {{- end -}}
+            {{- $active := or (in $currentCats $cat.Name) (eq $page.RelPermalink $url) -}}
+            <a class="cat-chip{{ if $active }} is-active{{ end }}"
+              href="{{ $url }}"
+              {{- with $cat.Title }} title="{{ . }}"{{ end -}}
+              {{- if $active }} aria-current="page"{{ end -}}
+            >
+              {{- with $cat.Params.Icon }}{{ dict "Class" . | partial "plugin/icon.html" }}{{ end -}}
+              <span class="cat-chip-text">{{ $cat.Name }}</span>
+              {{- if $count }}<span class="cat-chip-count">{{ $count }}</span>{{ end -}}
+            </a>
+          {{- end -}}
+        </nav>
+      {{- end }}
+    </div>
+
+    <div class="header-tools">
+      <a class="author-signature" href="{{ $authorURL }}" title="{{ $authorTitle }}">
+        <span class="author-signature-dot" aria-hidden="true"></span>
+        <span class="author-signature-name">{{ $authorName }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{{- /* ============================= 移动端 ============================= */ -}}
+<header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="{{ $relLangURL }}" title="{{ $site.Title }}" class="header-title-link">
+          {{- with $titleCfg -}}
+            {{- with .logo -}}
+              {{- dict "Src" . "Class" "logo" "Alt" $site.Title "Width" 26 "Height" 26 | partial "plugin/image.html" -}}
+            {{- end -}}
+            <span class="header-title-text">{{ .name | default $site.Title }}</span>
+          {{- else -}}
+            <span class="header-title-text">{{ $site.Title }}</span>
+          {{- end -}}
+        </a>
+      </div>
+      <a class="author-signature mobile-author" href="{{ $authorURL }}" title="{{ $authorTitle }}">
+        <span class="author-signature-dot" aria-hidden="true"></span>
+        <span class="author-signature-name">{{ $authorName }}</span>
+      </a>
+      <div class="theme-switch" role="button" aria-label="{{ T "header.switchTheme" }}">
+        {{- dict "Class" "fa-solid fa-adjust" | partial "plugin/icon.html" -}}
+      </div>
+      <div class="menu-toggle" id="menu-toggle-mobile" role="button" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile">
+        {{- range $site.Menus.main -}}
+          {{- $url := .URL -}}
+          {{- with $url -}}
+            {{- $url = . | relLangURL -}}
+          {{- end -}}
+          {{- with .Page -}}
+            {{- $url = .RelPermalink -}}
+          {{- end -}}
+          {{- if (ne .Params.Draft true) | or $buildDrafts | and (ne .Params.Type "desktop") -}}
+            <li class="menu-item{{ if $page.IsMenuCurrent `main` . | or ($page.HasMenuCurrent `main` .) | or (eq $page.RelPermalink $url) }} active{{ end }}">
+              {{- if .HasChildren -}}
+                <span class="nested-item">
+                  <a class="menu-link" href="{{ $url }}"{{ with .Title }} title="{{ . }}"{{ end }}>
+                    {{- with .Params.Icon -}}{{ dict "Class" (printf "%v fa-sm" .) | partial "plugin/icon.html" }} {{ end -}}
+                    {{- .Name -}}
+                  </a>
+                  {{ dict "Class" "dropdown-icon fa-solid fa-chevron-right" | partial "plugin/icon.html" }}
+                </span>
+                <ul class="sub-menu">
+                  {{- range .Children -}}
+                    {{- $curl := .URL | relLangURL -}}
+                    <li class="menu-item{{ if in $currentCats .Name }} active{{ end }}">
+                      <a class="menu-link" href="{{ $curl }}"{{ with .Title }} title="{{ . }}"{{ end }}>
+                        {{- with .Params.Icon -}}{{ dict "Class" (printf "%v fa-sm" .) | partial "plugin/icon.html" }} {{ end -}}
+                        {{- .Name -}}
+                      </a>
+                    </li>
+                  {{- end -}}
+                </ul>
+              {{- else -}}
+                <a class="menu-link" href="{{ $url }}"{{ with .Title }} title="{{ . }}"{{ end }}>
+                  {{- with .Params.Icon -}}{{ dict "Class" (printf "%v fa-sm" .) | partial "plugin/icon.html" }} {{ end -}}
+                  {{- .Name -}}
+                </a>
+              {{- end -}}
+            </li>
+          {{- end -}}
+        {{- end -}}
+        <li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header>

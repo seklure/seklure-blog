@@ -1,0 +1,45 @@
+{{- /*
+  左侧竖排菜单栏（Element UI el-menu 风格）。
+
+  渲染 menus.toml 中的一级菜单项（首页 / 归档 / 标签 / 关于），
+  分类分组由页头横排标签承载，不在此处重复。
+
+  调用位置：layouts/baseof.html
+*/ -}}
+
+{{- $page := . -}}
+{{- $site := .Site -}}
+
+<aside class="site-sidebar" id="site-sidebar" aria-label="站点导航">
+  <div class="sidebar-body">
+    <p class="sidebar-caption">导航</p>
+    <nav class="sidebar-nav">
+      <ul class="sidebar-menu">
+        {{- range $site.Menus.main -}}
+          {{- if eq .Identifier "categories" }}{{ continue }}{{ end -}}
+          {{- $item := . -}}
+          {{- $url := $item.URL | relLangURL -}}
+          {{- with $item.Page -}}{{- $url = .RelPermalink -}}{{- end -}}
+          {{- $active := or ($page.IsMenuCurrent "main" $item) ($page.HasMenuCurrent "main" $item) (eq $page.RelPermalink $url) -}}
+          <li class="sidebar-menu-item{{ if $active }} is-active{{ end }}">
+            <a class="sidebar-menu-link" href="{{ $url }}"
+              {{- with $item.Title }} title="{{ . }}"{{ end }}
+              {{- if $active }} aria-current="page"{{ end -}}
+            >
+              {{- with $item.Params.Icon }}{{ dict "Class" . | partial "plugin/icon.html" }}{{ end -}}
+              <span class="sidebar-menu-text">{{ $item.Name }}</span>
+            </a>
+          </li>
+        {{- end -}}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="theme-switch sidebar-theme-switch" role="button" aria-label="{{ T "header.switchTheme" }}" title="{{ T "header.switchTheme" }}">
+      {{- dict "Class" "fa-solid fa-adjust" | partial "plugin/icon.html" -}}
+      <span class="sidebar-theme-text">切换主题</span>
+    </div>
+    <p class="sidebar-copyright">© {{ now.Format "2006" }} {{ $site.Params.author.name | default $site.Title }}</p>
+  </div>
+</aside>

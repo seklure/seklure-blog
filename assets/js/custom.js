@@ -1,31 +1,9 @@
 /**
  * seklureBlog 站点自定义脚本。
  *
- * 说明：
- *   主题（FixIt）在初始化时会向浏览器控制台输出一条带主题名的推广横幅。
- *   本站已按需求将页面上所有 Hugo / FixIt 标识替换为 seklure，
- *   因此这里用一个窄匹配的过滤器屏蔽该横幅（只过滤同时包含两个特征词的输出，
- *   不影响其它日志）。如不需要，删除下方 IIFE 即可。
+ * 页面结构（顶部横排分类标签、左侧竖排菜单栏、右上角作者署名）
+ * 均由 Hugo 模板在 layouts/ 下直接渲染，这里仅保留站点级的小工具逻辑。
  */
-class SeklureBlog {
-  /**
-   * 站点就绪提示
-   * @returns {SeklureBlog}
-   */
-  hello() {
-    console.log('custom.js: seklureBlog ready.');
-    return this;
-  }
-
-  /**
-   * 初始化
-   * @returns {SeklureBlog}
-   */
-  init() {
-    this.hello();
-    return this;
-  }
-}
 
 /**
  * 屏蔽主题控制台推广横幅。
@@ -44,12 +22,13 @@ class SeklureBlog {
 })();
 
 /**
- * 立即执行
+ * 窄屏下保持顶部横排分类标签自动滚动到当前分类。
  */
-(() => {
-  window.seklureBlog = new SeklureBlog();
-  // DOM 树构建完成后执行
-  document.addEventListener('DOMContentLoaded', () => {
-    window.seklureBlog.init();
-  });
-})();
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('.header-cats');
+  const active = nav && nav.querySelector('.cat-chip.is-active');
+  if (active) {
+    const left = active.offsetLeft - nav.clientWidth / 2 + active.clientWidth / 2;
+    nav.scrollTo({ left: Math.max(left, 0), behavior: 'instant' });
+  }
+});

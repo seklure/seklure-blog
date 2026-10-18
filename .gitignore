@@ -6,3 +6,6 @@ resources/
 .hugo_build.lock
 _vendor
 jsconfig.json
+
+# 本地备份目录
+.backup-*/
